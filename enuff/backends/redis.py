@@ -25,7 +25,7 @@ class RedisBackend(object):
         self.conn.lrem(queue, ensure_pk(instance))
 
     def add(self, queue, instance):
-        self.conn.lrem(queue, ensure_pk(instance))
+        self.conn.lpush(queue, ensure_pk(instance))
 
     def trim(self, queue, trim):
         self.conn.ltrim(queue, 0, trim)

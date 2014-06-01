@@ -13,10 +13,10 @@ class EnuffManager(models.Manager):
         key = self.NS_SEP.join(map(str, [self.model._meta.app_label, self.model._meta.module_name, site, queue]))
         return key
 
-    def push_to_list(self, queue, instance, trim=500,  conn=None, rem=True, site=None):
+    def push_to_list(self, queue, instance, trim=500,  conn=None, bump=True, site=None):
         backend = RedisBackend()
         key = self.get_key(queue, site=site)
-        if rem:
+        if bump:
             backend.remove(key, instance.pk)
         backend.add(key, instance.pk)
         if trim:
