@@ -23,4 +23,13 @@ Two years later, someone visits your fucking pedantic blog and then this happens
        .... # blah blah eventually a regrettable response is returned
 
 
-But your bounce rate is 95% so the comment doesn't even load, but still. It was efficient and you finally did webspeed.
+But your bounce rate is 95% so the comment doesn't even load, but still. It was efficient and you finally did webspeed. Or what's more likely is heroku broke one of their internal APIs like they do every 6 months so you got a 500, but at least the comment was somewhere in memory.
+
+## Advantages (not really a numerical list)
+
+1. Just stop writing migrations everytime you need a new feed. Stuff them into another queue.
+
+## Supported Backends
+
+1. Redis
+2. Something else some other person decides to write
