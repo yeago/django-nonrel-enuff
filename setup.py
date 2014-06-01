@@ -4,11 +4,11 @@ from setuptools import setup, find_packages
 
 setup(
     name='django-nonrel-enuff',
-    version="0.1",
+    version="0.1b",
     author='Steve Yeago',
-    author_email='subsume@gmail.com',
+    author_email='yeago999@gmail.com',
     description='Crutch for SQL users',
-    url='http://github.com/subsume/django-nonrel-enuff',
+    url='http://github.com/yeago/django-nonrel-enuff',
     packages=find_packages(),
     include_package_data=True,
     classifiers=[
