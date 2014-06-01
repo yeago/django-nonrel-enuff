@@ -32,4 +32,4 @@ But your bounce rate is 95% so the comment doesn't even load, but still. It was 
 ## Supported Backends
 
 1. Redis
-2. Something else some other person decides to write
+2. Something else some other person decides to write (mongo pull requests ignored)
