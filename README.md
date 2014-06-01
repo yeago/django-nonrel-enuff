@@ -8,7 +8,7 @@ Just use this handy manager situationally, mostly when you want to stuff the lat
        ...
        nonrel_objects = EnuffManager()
 
-Later that that year, someone saves a comment on your shitty blog which you should have just used WordPress but were too smug about your great python skills and now you're maintaining your dumb blog app that nobody else uses or cares about because they are too busy maintaining their own shittier one.
+Later that that year, <s>someone</s> a bot spammer saves a comment on your shitty blog which you should have just used WordPress but were too smug about your great python skills and now you're maintaining your dumb blog app that nobody else uses or cares about because they are too busy maintaining their own shittier one.
 
     def some_save_signal(instance, *wtvr) 
        Comment.nonrel_objects.push_to_list('latest-comments', instance, trim=50)
