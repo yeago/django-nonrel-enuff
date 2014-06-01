@@ -27,7 +27,7 @@ But your bounce rate is 95% so the comment doesn't even load, but still. It was 
 
 ## Advantages (not really a numerical list)
 
-1. Just stop writing migrations everytime you need a new feed. Stuff them into another queue.
+1. Just stop writing migrations everytime you need a new feed. Stuff them into another queue. Keep that queue trimmed to a reasonable size and go outside on the weekend instead of trying to figure out why in the world MySQL wont use the right index on your sub-select of 50 million comments just to get the latest 5 related to some object.
 
 ## Supported Backends
 
