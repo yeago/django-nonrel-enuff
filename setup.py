@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='django-nonrel-enuff',
-    version="0.3",
+    version="0.4",
     author='Steve Yeago',
     author_email='yeago999@gmail.com',
     description='Crutch for SQL users',
