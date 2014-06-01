@@ -18,8 +18,9 @@ Two years later, someone visits your fucking pedantic blog and then this happens
     def my_homepage_view(request) 
        .... # blah blah blah
        context = {
-          'latest_comments'  Comment.nonrel_objects.get_list('latest_comments')
+          'latest_comments':  Comment.nonrel_objects.get_list('latest_comments')
        }
+       .... # blah blah eventually a regrettable response is returned
 
 
 But your bounce rate is 95% so the comment doesn't even load, but still. It was efficient and you finally did webspeed.
