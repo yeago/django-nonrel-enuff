@@ -10,7 +10,7 @@ class EnuffManager(models.Manager):
     def get_key(self, queue, site=None):
         site = ensure_pk(site) or settings.SITE_ID
 
-        key = self.NS_SEP.join([self.model._meta.app_name, self.model._meta.name, site, queue])
+        key = self.NS_SEP.join(map(str, [self.model._meta.app_label, self.model._meta.module_name, site, queue]))
         return key
 
     def push_to_list(self, queue, instance, trim=500,  conn=None, rem=True, site=None):

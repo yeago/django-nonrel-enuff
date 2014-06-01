@@ -1,5 +1,18 @@
-from redis import Redis
+from __future__ import absolute_import
+from django.conf import settings
+from redis import Redis as RedisBase
 from enuff.utils import ensure_pk
+
+class Redis(RedisBase):
+    def __init__(self, **kwargs):
+        kwargs = kwargs or {}
+        if not 'port' in kwargs:
+            kwargs['port'] = settings.REDIS_PORT
+        if not 'host' in kwargs:
+            kwargs['host'] = settings.REDIS_HOST
+        if not 'db' in kwargs:
+            kwargs['db'] = settings.REDIS_DB
+        super(Redis,self).__init__(**kwargs)
 
 class RedisBackend(object):
     def __init__(self, conn=None):
