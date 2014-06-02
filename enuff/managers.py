@@ -25,9 +25,8 @@ class EnuffManager(models.Manager):
     def base_qs(self):
         return self.model.objects.all()
 
-    def get_list(self, queue, as_model=True, limit=None, in_pks=None, randomize=False, site=None):
+    def get_list(self, queue, as_model=True, limit=None, in_pks=None, randomize=False, site=None, sort_lambda=None):
         backend = RedisBackend()
-
         pks = backend.get_ids(self.get_key(queue, site=site), limit=limit)
         if in_pks:
             pks = [i for i in pks if i in in_pks]
@@ -48,5 +47,6 @@ class EnuffManager(models.Manager):
                         count += 1
                         yield instance
 
-        qs = self.base_qs().filter(pk__in=pks)
+        qs = self.base_qs().filter(pk__in=pks)  # so ok, this is technically SQL but can SQL fuck this one up THAT bad??
+        qs = qs if not sort_lambda else sort_lambda(qs) 
         return generator_inner(qs)
