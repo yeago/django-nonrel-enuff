@@ -18,7 +18,7 @@ Two years later, someone visits your fucking pedantic blog and then this happens
     def my_homepage_view(request) 
        .... # blah blah blah
        context = {
-          'latest_comments':  Comment.nonrel_objects.get_list('latest_comments')
+          'latest_comments':  Comment.nonrel_objects.get_list('latest-comments')
        }
        .... # blah blah eventually a regrettable response is returned
 
