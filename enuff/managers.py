@@ -7,10 +7,12 @@ from enuff.utils import ensure_pk
 
 class EnuffManager(models.Manager):
     NS_SEP = '::'  # namespace separator
+
     def get_key(self, queue, site=None):
         site = ensure_pk(site) or settings.SITE_ID
 
-        key = self.NS_SEP.join(map(str, [site, self.model._meta.app_label, self.model._meta.module_name, queue]))
+        key_tokens = [site, self.model._meta.app_label, self.model._meta.model_name, queue]
+        key = self.NS_SEP.join(map(str, key_tokens))
         return key
 
     def push_to_list(self, queue, instance, trim=500,  redis_conn=None, bump=True, site=None):
