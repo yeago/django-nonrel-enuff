@@ -15,13 +15,21 @@ class EnuffManager(models.Manager):
         key = self.NS_SEP.join(map(str, key_tokens))
         return key
 
-    def push_to_list(self, queue, instance, trim=500,  redis_conn=None, bump=True, site=None):
+    def push_to_list(self, queue, instances, trim=500, redis_conn=None, bump=True, site=None):
+        if not iter(instances):
+            instances = [instances]
         backend = RedisBackend(conn=redis_conn)
         key = self.get_key(queue, site=site)
+        current_list = backend.get_ids(queue, limit=trim)
+        known_length = len(current_list) + len(instances)
         if bump:
-            backend.remove(key, instance.pk)
-        backend.add(key, instance.pk)
-        if trim:
+            for item in instances:
+                if item.pk in current_list:
+                    backend.remove(key, item.pk)
+                    known_length -= 1
+        for item in instances:
+            backend.add(key, item.pk)
+        if trim and known_length > trim:
             backend.trim(key, trim)
 
     def base_qs(self):
@@ -50,5 +58,5 @@ class EnuffManager(models.Manager):
                         yield instance
 
         qs = self.base_qs().filter(pk__in=pks)  # so ok, this is technically SQL but can SQL fuck this one up THAT bad??
-        qs = qs if not sort_lambda else sort_lambda(qs) 
+        qs = qs if not sort_lambda else sort_lambda(qs)
         return generator_inner(qs)
