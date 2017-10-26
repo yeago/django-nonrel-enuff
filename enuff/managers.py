@@ -16,7 +16,9 @@ class EnuffManager(models.Manager):
         return key
 
     def push_to_list(self, queue, instances, trim=500, redis_conn=None, bump=True, site=None):
-        if not iter(instances):
+        try:
+            iter(instances)
+        except TypeError:
             instances = [instances]
         backend = RedisBackend(conn=redis_conn)
         key = self.get_key(queue, site=site)
