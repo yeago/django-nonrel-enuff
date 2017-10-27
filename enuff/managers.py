@@ -15,13 +15,17 @@ class EnuffManager(models.Manager):
         key = self.NS_SEP.join(map(str, key_tokens))
         return key
 
-    def push_to_list(self, queue, instance, trim=500,  redis_conn=None, bump=True, site=None):
+    def push_to_list(self, queue, instance, trim=500, redis_conn=None, bump=True, site=None):
         backend = RedisBackend(conn=redis_conn)
         key = self.get_key(queue, site=site)
+        current_list = backend.get_ids(queue, limit=trim)
+        known_length = len(current_list) + 1
         if bump:
-            backend.remove(key, instance.pk)
+            if instance.pk in current_list:
+                backend.remove(key, instance.pk)
+                known_length -= 1
         backend.add(key, instance.pk)
-        if trim:
+        if trim and known_length > trim:
             backend.trim(key, trim)
 
     def base_qs(self):
@@ -36,6 +40,7 @@ class EnuffManager(models.Manager):
             return []
         if not as_model:
             return pks
+
         def generator_inner(inner_pks):
             count = 0
             if randomize:
