@@ -35,7 +35,7 @@ class EnuffManager(models.Manager):
         backend = RedisBackend()
         pks = backend.get_ids(self.get_key(queue, site=site), limit=limit)
         if in_pks:
-            pks = [i for i in pks if i in in_pks]
+            pks = list(set([i for i in pks if i in in_pks]))
         if not pks:
             return []
         if not as_model:
