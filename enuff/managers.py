@@ -36,10 +36,12 @@ class EnuffManager(models.Manager):
         pks = backend.get_ids(self.get_key(queue, site=site), limit=limit)
         if not pks:
             return []
+        if in_pks:
+            pks = [i for i in pks if i in in_pks]
         if not as_model:
             return pks
         if unique:
-            pks = list(set([i for i in pks if i in (in_pks or [])]))
+            pks = list(set(pks))
 
         def generator_inner(inner_pks):
             count = 0
