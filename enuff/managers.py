@@ -44,15 +44,26 @@ class EnuffManager(models.Manager):
             pks = list(set(pks))
 
         def generator_inner(inner_pks):
+            qs = None
+            if len(inner_pks) > 10 and (not limit or limit > 10):
+                qs = list(self.base_qs().filter(pk__in=inner_pks))
             count = 0
             if randomize:
                 random.shuffle(inner_pks)
             for pk in inner_pks:
-                try:
-                    yield self.base_qs().get(pk=pk)
-                    count += 1
-                except self.model.DoesNotExist:
-                    continue
+                if qs:
+                    for item in qs:
+                        if item.pk == pk:
+                            yield item
+                            count += 1
+                            qs.remove(item)
+                            break
+                else:
+                    try:
+                        yield self.base_qs().get(pk=pk)
+                        count += 1
+                    except self.model.DoesNotExist:
+                        continue
                 if limit and count == limit:
                     break
         return generator_inner(pks)
