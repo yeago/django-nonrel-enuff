@@ -39,7 +39,7 @@ class EnuffManager(models.Manager):
         if not as_model:
             return pks
         if unique:
-            pks = list(set([i for i in pks if i in in_pks]))
+            pks = list(set([i for i in pks if i in (in_pks or [])]))
 
         def generator_inner(inner_pks):
             count = 0
