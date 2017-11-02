@@ -31,15 +31,15 @@ class EnuffManager(models.Manager):
     def base_qs(self):
         return self.model.objects.all()
 
-    def get_list(self, queue, as_model=True, limit=None, in_pks=None, randomize=False, site=None):
+    def get_list(self, queue, as_model=True, limit=None, in_pks=None, randomize=False, site=None, unique=True):
         backend = RedisBackend()
         pks = backend.get_ids(self.get_key(queue, site=site), limit=limit)
-        if in_pks:
-            pks = list(set([i for i in pks if i in in_pks]))
         if not pks:
             return []
         if not as_model:
             return pks
+        if unique:
+            pks = list(set([i for i in pks if i in in_pks]))
 
         def generator_inner(inner_pks):
             count = 0
