@@ -41,7 +41,11 @@ class EnuffManager(models.Manager):
         if not as_model:
             return pks
         if unique:
-            pks = [i for i in pks if i not in pks]
+            used = []
+            for item in pks:
+                if item not in used:
+                    used.append(item)
+            pks = used
 
         def generator_inner(inner_pks):
             qs = None
