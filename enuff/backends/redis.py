@@ -35,4 +35,6 @@ class RedisBackend(object):
         self.conn.ltrim(queue, 0, trim)
 
     def get_ids(self, queue, limit=None):
+        if limit is not None:
+            limit -= 1  # from 1-index to 0-index
         return map(int, self.conn.lrange(queue, 0, limit or -1))
