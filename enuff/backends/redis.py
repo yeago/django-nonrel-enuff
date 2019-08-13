@@ -26,7 +26,7 @@ class RedisBackend(object):
         raise NotImplementedError
 
     def remove(self, queue, instance):
-        self.conn.lrem(queue, ensure_pk(instance))
+        self.conn.lrem(queue, 0, ensure_pk(instance))
 
     def add(self, queue, instance):
         self.conn.lpush(queue, ensure_pk(instance))
