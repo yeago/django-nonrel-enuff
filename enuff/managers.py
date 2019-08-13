@@ -18,7 +18,7 @@ class EnuffManager(models.Manager):
     def push_to_list(self, queue, instance, trim=500, redis_conn=None, bump=True, site=None):
         backend = RedisBackend(conn=redis_conn)
         key = self.get_key(queue, site=site)
-        current_list = backend.get_ids(queue)
+        current_list = backend.get_ids(key)
         known_length = len(current_list) + 1
         if bump:
             if instance.pk in current_list:
