@@ -19,7 +19,7 @@ class EnuffManager(models.Manager):
         backend = RedisBackend(conn=redis_conn)
         key = self.get_key(queue, site=site)
         current_list = backend.get_ids(key)
-        known_length = len(current_list) + 1
+        known_length = len(list(current_list)) + 1
         if bump:
             if instance.pk in current_list:
                 backend.remove(key, instance.pk)
