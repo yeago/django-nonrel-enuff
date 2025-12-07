@@ -28,7 +28,7 @@ class EnuffManager(models.Manager):
         if trim and known_length > trim:
             backend.trim(key, trim)
         if expiry is not None:
-            backend._conn.expire(key, expiry)
+            backend.conn.expire(key, expiry)
 
     def base_qs(self):
         return self.model.objects.all()
